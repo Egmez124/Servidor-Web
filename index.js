@@ -32,7 +32,7 @@ http.createServer((request, response) => {
     }else if(request.method === "POST"){
         switch(request.url) {
             case "/users":
-                addUser(request);
+                addUser(request, response);
             break;
             default:
                 readFile(request.url, response)
@@ -58,7 +58,7 @@ const readFile = (url, response) => {
     });
 }
 
-const addUser = (request)=>{
+const addUser = (request, response)=>{
     let data = '';
         //Cuando se estan escribiendo los datos
         request.on('data', chunk => {
@@ -83,6 +83,10 @@ const addUser = (request)=>{
             fs.writeFile("db_usuarios.txt", JSON.stringify(user), (error)=>{
                 if(error){
                     console.log(error);
+                }else{
+                    response.setHeader("Location", "/");
+                    response.statusCode = 302;
+                    response.end();
                 }
             });
         });
