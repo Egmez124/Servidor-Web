@@ -1,6 +1,11 @@
+//Importamos el módulo http
 let http = require("http");
+//Módulo que nos sirve para manejar los archivos
 let fs = require("fs");
+//path es una extención de node.js que nos permite obtener la extención de un archivo
+//ejm. console.log(path.extname(__dirname + url));
 let path = require("path");
+//mime nos sirve para obtener la extencion del archivo que solicitemos
 let mime = require("mime")
 
 http.createServer((request, response) => {
@@ -28,6 +33,7 @@ http.createServer((request, response) => {
 }).listen(80);
 
 const readFile = (url, response) => {
+    //__dirname es una variable global y esta definida en Node.js nos da la ruta absoluta
     let urlF = __dirname + url
     fs.readFile (urlF, (error, content) => {
         if(!error){
